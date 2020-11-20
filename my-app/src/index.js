@@ -8,18 +8,21 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            thing2: 1
+            accounts: [
+                "B of A",
+                "Robinhood",
+                "Charles Schwab",
+            ]
         }
     }
     render() {
+        let listItems = this.state.accounts.map(account => <li class="list-group-item">{account}</li>);
         return (
             <div class="accounts-list">
                 <div class="container-md">
                     <h1 class="align-content-center">Accounts</h1>
                     <ul class="list-group">
-                        <li class="list-group-item">B of A</li>
-                        <li class="list-group-item">Robinhood</li>
-                        <li class="list-group-item">Charles Schwab</li>
+                        {listItems}
                     </ul>
                 </div>
             </div>
