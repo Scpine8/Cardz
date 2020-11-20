@@ -18,9 +18,10 @@ class Home extends React.Component {
     render() {
         let listItems = this.state.accounts.map(account => <li class="list-group-item">{account}</li>);
         return (
-            <div class="accounts-list">
-                <div class="container-md">
-                    <h1 class="align-content-center">Accounts</h1>
+            <div class="container-md bg-info">
+                <h1>Cardz</h1>
+                <div class="accounts-list">
+                    <h2 class="align-content-center">Accounts</h2>
                     <ul class="list-group">
                         {listItems}
                     </ul>
