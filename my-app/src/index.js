@@ -11,7 +11,6 @@ class Home extends React.Component {
             thing2: 1
         }
     }
-<<<<<<< Updated upstream
     render() {
         return (
             <div class="accounts-list">
@@ -27,9 +26,6 @@ class Home extends React.Component {
         )
         
     }
-=======
-    
->>>>>>> Stashed changes
 }
 
 ReactDOM.render(
