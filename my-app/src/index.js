@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import Connect from './connect/connect';
 
 
 class Home extends React.Component {
@@ -15,8 +16,20 @@ class Home extends React.Component {
             ]
         }
     }
+    handleAccountClick(index) {
+        const connectToServer = new Connect(URL);
+
+        let data = {
+            account: this.state.accounts[index]
+        };
+
+        connectToServer.postData(data);
+    }
+
     render() {
-        let listItems = this.state.accounts.map(account => <li class="list-group-item">{account}</li>);
+        let listItems = this.state.accounts.map((account, index) => (
+            <li onClick={() => this.handleAccountClick(index)}  class="list-group-item">{account}</li>
+        ));
         return (
             <div class="container-md bg-info">
                 <h1>Cardz</h1>
@@ -28,7 +41,6 @@ class Home extends React.Component {
                 </div>
             </div>
         )
-        
     }
 }
 
