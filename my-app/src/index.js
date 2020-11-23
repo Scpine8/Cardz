@@ -16,20 +16,19 @@ class Home extends React.Component {
             ]
         }
     }
-    handleAccountClick(i) {
+    handleAccountClick(index) {
         const connectToServer = new Connect(URL);
 
         let data = {
-            headers: {},
-            body: this.state.accounts[i]
+            account: this.state.accounts[index]
         };
 
         connectToServer.postData(data);
     }
 
     render() {
-        let listItems = this.state.accounts.map(account => (
-            <li onClick={i => this.handleAccountClick(i)}  class="list-group-item">{account}</li>
+        let listItems = this.state.accounts.map((account, index) => (
+            <li onClick={() => this.handleAccountClick(index)}  class="list-group-item">{account}</li>
         ));
         return (
             <div class="container-md bg-info">
