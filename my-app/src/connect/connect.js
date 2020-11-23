@@ -7,11 +7,21 @@ class Connect {
         this.url =  URL
     }
 
+    async getData() {
+        const response = await fetch(this.url, {
+            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json());
+        return response
+    }
+
     // Example POST method implementation:
     async postData(data) {
         // Default options are marked with *
-        console.log("URL", this.url);
-        console.log("Data", data);
         const response = await fetch(this.url, {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
@@ -19,8 +29,9 @@ class Connect {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data) // body data type must match "Content-Type" header
-        });
-        return response.json(); // parses JSON response into native JavaScript objects
+        })
+        .then(response => response.json())
+        return response; // parses JSON response into native JavaScript objects
     }
 }
 
