@@ -2,21 +2,23 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const port = 8001
+const port = 8000
 
 app.use(cors())
 app.use(bodyParser())
 
-let accounts = [];
+let data = {
+  accounts: []
+}
 
 app.get('/', (req, res) => {
-  res.send(accounts.length > 0 ? accounts : "Hello World!")
+  res.send(data.accounts.length > 0 ? data : "No Data to Show :(")
 })
 
 app.post('/', (req, res) => {
   console.log(req.body)
-  accounts.push(req.body.account)
-  res.send(accounts.length > 0 ? accounts : "Hello World!")
+  data.accounts.push(req.body.account)
+  res.send(data.accounts.length > 0 ? data : "No Data to Show :(")
 })
 
 app.listen(port, () => {
