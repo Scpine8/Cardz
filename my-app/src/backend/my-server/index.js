@@ -16,8 +16,12 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-  console.log(req.body)
-  data.accounts.push(req.body.account)
+  if (req.body.command == 'clear') {
+    Object.assign(data, { accounts: [] })
+  } else {
+    console.log(req.body)
+    data.accounts.push(req.body.account)
+  }
   res.send(data.accounts.length > 0 ? data : "No Data to Show :(")
 })
 

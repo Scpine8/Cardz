@@ -41,6 +41,10 @@ class Home extends React.Component {
             accounts_fromServer: newState.accounts_fromServer
         }, console.log(this.state));
     }
+    handleClearData() {
+        const connectToServer = new Connect(URL);
+        connectToServer.clearData().then(data => console.log("Cleared:", data));
+    }
     componentDidUpdate() {
         console.log(this.state);
     }
@@ -58,6 +62,7 @@ class Home extends React.Component {
                 <List header={'Accounts'} listItems={accountsItems} />
                 <List header={'Server Data'} listItems={accounts_FromServer} />
                 <button type="button" onClick={() => this.handleGetData()} className="btn btn-primary">Get Data</button>
+                <button type="button" onClick={() => this.handleClearData()} className="btn btn-secondary">Clear Data</button>
             </div>
         )
     }
