@@ -1,6 +1,6 @@
 // Server Connect Classes
 
-const URL = 'http://localhost:8001';
+const URL = 'http://localhost:8000';
 
 class Connect {
     constructor() {
@@ -19,11 +19,9 @@ class Connect {
         return response
     }
 
-    // Example POST method implementation:
     async postData(data) {
-        // Default options are marked with *
         const response = await fetch(this.url, {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            method: 'POST', 
             mode: 'cors', // no-cors, *cors, same-origin
             headers: {
                 'Content-Type': 'application/json',
@@ -31,7 +29,7 @@ class Connect {
             body: JSON.stringify(data) // body data type must match "Content-Type" header
         })
         .then(response => response.json())
-        return response; // parses JSON response into native JavaScript objects
+        return response; 
     }
 }
 
