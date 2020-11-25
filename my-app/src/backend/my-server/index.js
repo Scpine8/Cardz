@@ -12,7 +12,7 @@ let data = {
 }
 
 app.get('/', (req, res) => {
-  res.send(data.accounts.length > 0 ? data : "No Data to Show :(")
+  res.send(data)
 })
 
 app.post('/', (req, res) => {
@@ -22,7 +22,7 @@ app.post('/', (req, res) => {
     console.log(req.body)
     data.accounts.push(req.body.account)
   }
-  res.send(data.accounts.length > 0 ? data : "No Data to Show :(")
+  res.send(data)
 })
 
 app.listen(port, () => {
