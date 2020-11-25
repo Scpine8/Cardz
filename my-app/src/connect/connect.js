@@ -16,7 +16,7 @@ class Connect {
             },
             body: JSON.stringify({ command: 'clear' }) // body data type must match "Content-Type" header
         })
-        .then(response => response.text()) // the response will always be 'No Data to Show :('
+        .then(response => response.json()) // the response will always be 'No Data to Show :('
         return response
     }
 
