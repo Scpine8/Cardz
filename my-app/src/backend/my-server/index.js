@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-  if (req.body.command == 'clear') {
+if (req.body.command == 'clear') {
     Object.assign(data, { accounts: [] })
   } else {
     console.log(req.body)
