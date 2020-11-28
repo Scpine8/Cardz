@@ -38,6 +38,9 @@ class Home extends React.Component {
             }, console.log("Set Accounts_fromServer:", this.state))
         });
     }
+    componentDidMount() {
+        this.handleGetData();
+    }
     handleClearData() {
         const connectToServer = new Connect(URL);
         connectToServer.clearData().then(data => console.log("Cleared:", data));
@@ -48,7 +51,7 @@ class Home extends React.Component {
     
     render() {
         let accountsItems = this.state.accounts.map((account, index) => (
-            <li key={index} onClick={() => this.handleAccountClick(index)} className="list-group-item">{account}</li>
+            <li key={index} onClick={() => this.handleAccountClick(index)} className="list-group-item" >{account}</li>
         ));
         let accounts_fomServer = this.state.accounts_fromServer.map((account, index) => (
             <li key={index} className="list-group-item">{account}</li>
