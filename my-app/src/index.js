@@ -28,8 +28,6 @@ class Home extends React.Component {
         connectToServer.postData(data).then(
             console.log("Posted:", data)
         )
-
-        this.setState({ testBool: !this.state.testBool}, console.log("Done"));
     }
     handleGetData() {
         const connectToServer = new Connect(URL); 
