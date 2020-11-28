@@ -1,4 +1,9 @@
-.accounts-list {
+.accounts-list-group {
     align-content: center;
     padding: 15%;
+}
+
+.accounts-list {
+    align-content: center;
+    padding: 5%;
 }
