@@ -31,11 +31,19 @@ class Home extends React.Component {
     }
     handleGetData() {
         const connectToServer = new Connect(URL); 
+
+        const getDataLog = () => {
+            console.log("Set Accounts_fromServer:", this.state);
+
+            if (this.state.accounts_fromServer.length === 0) {
+                console.log("Server is empty")
+            }
+        }
         
         connectToServer.getData().then(data => {
             this.setState({
                 accounts_fromServer: data.accounts
-            }, console.log("Set Accounts_fromServer:", this.state))
+            }, getDataLog)
         });
     }
     componentDidMount() {
@@ -44,6 +52,7 @@ class Home extends React.Component {
     handleClearData() {
         const connectToServer = new Connect(URL);
         connectToServer.clearData().then(data => console.log("Cleared:", data));
+        window.location.reload(false); // refresh the page to clear the UI
     }
     printState() {
         console.log('State:', this.state);
