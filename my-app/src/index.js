@@ -28,41 +28,45 @@ class Home extends React.Component {
         connectToServer.postData(data).then(
             console.log("Posted:", data)
         )
+
+        this.setState({ testBool: !this.state.testBool}, console.log("Done"));
     }
     handleGetData() {
-        const connectToServer = new Connect(URL);
-        let newState = this.state
+        const connectToServer = new Connect(URL); 
         
-        connectToServer.getData().then(data => newState.accounts_fromServer = data.accounts);
-        // connectToServer.getData().then(data => Object.assign({accounts_fromServer: data.accounts}, newState));
-        console.log("NewState: ", newState);
-
-        this.setState({
-            accounts_fromServer: newState.accounts_fromServer
-        }, console.log(this.state));
+        connectToServer.getData().then(data => {
+            this.setState({
+                accounts_fromServer: data.accounts
+            }, console.log("Set Accounts_fromServer:", this.state))
+        });
     }
     handleClearData() {
         const connectToServer = new Connect(URL);
         connectToServer.clearData().then(data => console.log("Cleared:", data));
     }
-    componentDidUpdate() {
-        console.log(this.state);
+    printState() {
+        console.log('State:', this.state);
     }
     
     render() {
         let accountsItems = this.state.accounts.map((account, index) => (
-            <li key={account} onClick={() => this.handleAccountClick(index)} className="list-group-item">{account}</li>
+            <li key={index} onClick={() => this.handleAccountClick(index)} className="list-group-item">{account}</li>
         ));
-        let accounts_FromServer = this.state.accounts_fromServer.map(account => (
-            <li key={account} className="list-group-item">{account}</li>
+        let accounts_fomServer = this.state.accounts_fromServer.map((account, index) => (
+            <li key={index} className="list-group-item">{account}</li>
         ));
         return (
             <div className="container-md bg-info">
                 <h1>Cardz</h1>
-                <List header={'Accounts'} listItems={accountsItems} />
-                <List header={'Server Data'} listItems={accounts_FromServer} />
+                <div className='accounts-list-group'>
+                    <List header={'Accounts'} listItems={accountsItems} />
+                    <List header={'Server Data'} listItems={accounts_fomServer} />
+                </div>
+                
                 <button type="button" onClick={() => this.handleGetData()} className="btn btn-primary">Get Data</button>
                 <button type="button" onClick={() => this.handleClearData()} className="btn btn-secondary">Clear Data</button>
+                {/* Dev Tool: */}
+                <button type="button" onClick={() => this.printState()} className="btn btn-primary">Print State</button> 
             </div>
         )
     }
