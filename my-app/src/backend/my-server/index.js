@@ -2,21 +2,28 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const port = 8001
+const port = 8000
 
 app.use(cors())
 app.use(bodyParser())
 
-let accounts = [];
+let data = {
+  accounts: []
+}
 
 app.get('/', (req, res) => {
-  res.send(accounts.length > 0 ? accounts : "Hello World!")
+  res.send(data)
 })
 
 app.post('/', (req, res) => {
-  console.log(req.body)
-  accounts.push(req.body.account)
-  res.send(accounts.length > 0 ? accounts : "Hello World!")
+if (req.body.command == 'clear') {
+    Object.assign(data, { accounts: [] })
+    console.log("Data Cleared")
+  } else {
+    console.log(req.body)
+    data.accounts.push(req.body.account)
+  }
+  res.send(data)
 })
 
 app.listen(port, () => {
