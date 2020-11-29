@@ -15,35 +15,48 @@ class Home extends React.Component {
                 "Robinhood",
                 "Charles Schwab",
             ],
-            accounts_fromServer: []
+            accounts_fromServer: ["No Data in Server!"]
         }
     }
     handleAccountClick(index) {
         const connectToServer = new Connect(URL);
 
-        let data = {
-            account: this.state.accounts[index]
+        let accountToPost = this.state.accounts[index]; // this is the account that the user selected
+        let new_accounts_fromServer = this.state.accounts_fromServer; // make copy of accounts_fromServer
+        if (new_accounts_fromServer[0] === "No Data in Server!") {
+            new_accounts_fromServer[0] = accountToPost; // replace 'No Data in Server' with accountToPost
+        } else {
+            new_accounts_fromServer.push(accountToPost); // add accountToPost to the copy
+        }
+
+        let data = { // make a data object to POST to my_server
+            account: accountToPost
         };
 
-        connectToServer.postData(data).then(
-            console.log("Posted:", data)
-        )
+        // POST the new data object to my_server
+        connectToServer.postData(data).then(() => {
+            // ...then set accounts_fromServer to the updated copy, once we get a response back from my_server (and we know the data was successfully posted)
+            this.setState({
+                accounts_fomServer: new_accounts_fromServer
+            });
+            console.log("[POST Success] Posted:", data);
+        });
     }
     handleGetData() {
         const connectToServer = new Connect(URL); 
-
-        const getDataLog = () => {
-            console.log("Set Accounts_fromServer:", this.state);
-
-            if (this.state.accounts_fromServer.length === 0) {
-                console.log("Server is empty")
-            }
-        }
         
         connectToServer.getData().then(data => {
-            this.setState({
-                accounts_fromServer: data.accounts
-            }, getDataLog)
+            // If no data in my_server, display 'No Data in Server' in the Server Data list
+            if (data.accounts.length === 0) {
+                this.setState({
+                    accounts_fromServer: ["No Data in Server!"]
+                }, console.log("[GET Success] Server is empty"));
+            } else {
+                // If there is data in my_server, update state to show the accounts from my_server
+                this.setState({
+                    accounts_fromServer: data.accounts
+                }, console.log("[GET Success] Accounts from Sever:", data.accounts)); // FIX: this is a little suspect because im not actually printing the state to prove the change occured
+            }
         });
     }
     componentDidMount() {
@@ -51,8 +64,10 @@ class Home extends React.Component {
     }
     handleClearData() {
         const connectToServer = new Connect(URL);
-        connectToServer.clearData().then(data => console.log("Cleared:", data));
-        window.location.reload(false); // refresh the page to clear the UI
+        connectToServer.clearData().then(data => {
+            this.handleGetData();
+            console.log("Cleared:", data);
+        });
     }
     printState() {
         console.log('State:', this.state);
