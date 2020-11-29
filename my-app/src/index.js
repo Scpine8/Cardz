@@ -65,8 +65,9 @@ class Home extends React.Component {
     handleClearData() {
         const connectToServer = new Connect(URL);
         connectToServer.clearData().then(data => {
-            this.handleGetData();
-            console.log("Cleared:", data);
+            this.setState({
+                accounts_fromServer: ["No Data in Server!"]
+            }, console.log("Server Cleared:", data.accounts));
         });
     }
     printState() {
