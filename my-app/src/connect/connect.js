@@ -1,4 +1,7 @@
+import 'regenerator-runtime/runtime';
+
 // Server Connect Classes
+
 
 const URL = 'http://localhost:8000';
 
@@ -46,4 +49,6 @@ class Connect {
     }
 }
 
-export default Connect;
+const server_connection = new Connect();
+
+export default server_connection;

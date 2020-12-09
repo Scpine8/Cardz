@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import Connect from './connect/connect';
+import server_connection from './connect/connect';
 import List from './components/list';
 
 
@@ -19,7 +19,7 @@ class Home extends React.Component {
         }
     }
     handleAccountClick(index) {
-        const connectToServer = new Connect(URL);
+        // const connectToServer = new Connect();
 
         let accountToPost = this.state.accounts[index]; // this is the account that the user selected
         let new_accounts_fromServer = this.state.accounts_fromServer; // make copy of accounts_fromServer
@@ -34,7 +34,7 @@ class Home extends React.Component {
         };
 
         // POST the new data object to my_server
-        connectToServer.postData(data).then(() => {
+        server_connection.postData(data).then(() => {
             // ...then set accounts_fromServer to the updated copy, once we get a response back from my_server (and we know the data was successfully posted)
             this.setState({
                 accounts_fomServer: new_accounts_fromServer
@@ -43,9 +43,9 @@ class Home extends React.Component {
         });
     }
     handleGetData() {
-        const connectToServer = new Connect(URL); 
+        // const connectToServer = new Connect(); 
         
-        connectToServer.getData().then(data => {
+        server_connection.getData().then(data => {
             // If no data in my_server, display 'No Data in Server' in the Server Data list
             if (data.accounts.length === 0) {
                 this.setState({
@@ -63,8 +63,8 @@ class Home extends React.Component {
         this.handleGetData();
     }
     handleClearData() {
-        const connectToServer = new Connect(URL);
-        connectToServer.clearData().then(data => {
+        // const connectToServer = new Connect();
+        server_connection.clearData().then(data => {
             this.setState({
                 accounts_fromServer: ["No Data in Server!"]
             }, console.log("Server Cleared:", data.accounts));
@@ -97,7 +97,6 @@ class Home extends React.Component {
         )
     }
 }
-
 ReactDOM.render(
     <Home />,
     document.getElementById('root')
