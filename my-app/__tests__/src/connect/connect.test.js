@@ -1,7 +1,13 @@
-import React from 'react';
+import Connect from '../../../src/connect/connect';
+jest.mock('../../../src/connect/connect');
+
+// const mock_URL = 'www.mock.com';
+// const mock_Connect = new Connect(mock_URL);
+
+
 
 describe('Connect Class Tests', () => {
-    test('1 + 1 is 2', () => {
-        expect(sum(1,1)).toBe(2);
+    test('clearData test', () => {
+        expect(true).toBeTruthy();
     });
 });
