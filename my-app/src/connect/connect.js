@@ -49,4 +49,6 @@ class Connect {
     }
 }
 
-export default Connect;
+const server_connection = new Connect();
+
+export default server_connection;
