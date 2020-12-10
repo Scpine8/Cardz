@@ -8,7 +8,6 @@ import List from './components/list';
 
 const EMPTY_SERVER_MESSAGE = "No Data in Server!";
 
-
 class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -108,3 +107,5 @@ ReactDOM.render(
     <Home />,
     document.getElementById('root')
   );
+
+export default Home;
