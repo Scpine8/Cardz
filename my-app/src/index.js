@@ -6,6 +6,9 @@ import server_connection from './connect/connect';
 import List from './components/list';
 
 
+const EMPTY_SERVER_MESSAGE = "No Data in Server!";
+
+
 class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -15,71 +18,75 @@ class Home extends React.Component {
                 "Robinhood",
                 "Charles Schwab",
             ],
-            accounts_fromServer: ["No Data in Server!"]
+            accounts_fromServer: [EMPTY_SERVER_MESSAGE]
         }
     }
-    handleAccountClick(index) {
-        // const connectToServer = new Connect();
-
-        let accountToPost = this.state.accounts[index]; // this is the account that the user selected
-        let new_accounts_fromServer = this.state.accounts_fromServer; // make copy of accounts_fromServer
-        if (new_accounts_fromServer[0] === "No Data in Server!") {
-            new_accounts_fromServer[0] = accountToPost; // replace 'No Data in Server' with accountToPost
-        } else {
-            new_accounts_fromServer.push(accountToPost); // add accountToPost to the copy
+    handleAccountSelect(index) {
+        let accountToPost = { // make a data object to POST to My-Server
+            account: this.state.accounts[index] // this is the account that the user selected
         }
-
-        let data = { // make a data object to POST to my_server
-            account: accountToPost
-        };
-
-        // POST the new data object to my_server
-        server_connection.postData(data).then(() => {
-            // ...then set accounts_fromServer to the updated copy, once we get a response back from my_server (and we know the data was successfully posted)
+        // POST the new data object to My-Server
+        server_connection.postData(accountToPost).then(data => {
+            // ...then set accounts_fromServer to the updated copy, once we get a response back from My-Server (and we know the data was successfully posted)
             this.setState({
-                accounts_fomServer: new_accounts_fromServer
-            });
-            console.log("[POST Success] Posted:", data);
+                // If no data in My-Server, display 'No Data in Server' in accounts_fromServer,
+                // but if there is data in My-Server, update state to show the accounts from My-Server
+                accounts_fromServer: data.accounts.length === 0 ? [EMPTY_SERVER_MESSAGE] : data.accounts
+            }, console.log("[POST Success] Posted:", accountToPost));
         });
     }
-    handleGetData() {
-        // const connectToServer = new Connect(); 
-        
-        server_connection.getData().then(data => {
-            // If no data in my_server, display 'No Data in Server' in the Server Data list
-            if (data.accounts.length === 0) {
-                this.setState({
-                    accounts_fromServer: ["No Data in Server!"]
-                }, console.log("[GET Success] Server is empty"));
+    handleGetData() { 
+        const getDataMessage = (accounts) => {
+            if (accounts.length === 0) {
+                console.log("[GET Success] Server is empty");
             } else {
-                // If there is data in my_server, update state to show the accounts from my_server
-                this.setState({
-                    accounts_fromServer: data.accounts
-                }, console.log("[GET Success] Accounts from Sever:", data.accounts)); // FIX: this is a little suspect because im not actually printing the state to prove the change occured
+                console.log("[GET Success] Accounts from Server:", accounts);
             }
+        }
+        server_connection.getData().then(data => {
+            this.setState({
+                // If no data in My-Server, display 'No Data in Server' in accounts_fromServer,
+                // but if there is data in My-Server, update state to show the accounts from My-Server
+                accounts_fromServer: data.accounts.length === 0 ? [EMPTY_SERVER_MESSAGE] : data.accounts
+            }, getDataMessage(data.accounts));
         });
-    }
-    componentDidMount() {
-        this.handleGetData();
     }
     handleClearData() {
         // const connectToServer = new Connect();
         server_connection.clearData().then(data => {
             this.setState({
-                accounts_fromServer: ["No Data in Server!"]
-            }, console.log("Server Cleared:", data.accounts));
+                accounts_fromServer: [EMPTY_SERVER_MESSAGE]
+            }, console.log("Server Cleared:", data));
         });
+    }
+    handleAccountRemove(index) {
+        const account_to_remove = this.state.accounts_fromServer[index];
+        if (account_to_remove !== EMPTY_SERVER_MESSAGE) { // Don't need to try to remove when the server is empty
+            // POST the index to remove from 'data' in My-Server
+            server_connection.removeOne(index).then(data => {
+                this.setState({
+                    // If no data in My-Server, display 'No Data in Server' in accounts_fromServer,
+                    // but if there is data in My-Server, update state to show the accounts from My-Server
+                    accounts_fromServer: data.accounts.length === 0 ? [EMPTY_SERVER_MESSAGE] : data.accounts
+                }, console.log("[POST Success] Removed:", { account: account_to_remove }));
+
+            });
+        };
     }
     printState() {
         console.log('State:', this.state);
     }
+
+    componentDidMount() {
+        this.handleGetData();
+    }
     
     render() {
         let accountsItems = this.state.accounts.map((account, index) => (
-            <li key={index} onClick={() => this.handleAccountClick(index)} className="list-group-item" >{account}</li>
+            <li key={index} onClick={() => this.handleAccountSelect(index)} className="list-group-item" >{account}</li>
         ));
         let accounts_fomServer = this.state.accounts_fromServer.map((account, index) => (
-            <li key={index} className="list-group-item">{account}</li>
+            <li key={index} onClick={() => this.handleAccountRemove(index)} className="list-group-item">{account}</li>
         ));
         return (
             <div className="container-md bg-info">
