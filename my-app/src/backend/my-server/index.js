@@ -37,7 +37,7 @@ app.post('/', (req, res) => {
     data.accounts = accounts_final; // updated the 'data' object to reflect change in 'accounts' list
     console.log(removeMessage(accounts_initial, accounts_final, account_to_remove, req.body.index));
   }
-  else {
+  else if (typeof req.body.account === "string") {
     console.log(req.body)
     data.accounts.push(req.body.account)
   }
