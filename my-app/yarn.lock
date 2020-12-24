@@ -10884,10 +10884,23 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
+react-plaid-link@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-plaid-link/-/react-plaid-link-3.0.0.tgz#c456d6486b5923f920f57e98bbac64ecefaf96bd"
+  integrity sha512-jXL3xYvDOHYQ66cKaWdzU1OcFM6RKW05bbA3CnMcgm6XurKur0n6cWB6JNIn3Z9DDiXiS/UaScnzmGa7GagVKA==
+  dependencies:
+    prop-types "^15.7.2"
+    react-script-hook "1.1.0"
+
 react-refresh@^0.8.3:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.8.3.tgz#721d4657672d400c5e3c75d063c4a85fb2d5d68f"
   integrity sha512-X8jZHc7nCMjaCqoU+V2I0cOhNW+QMBwSUkeXnTi8IPe6zaRWfn60ZzvFDZqWPfmSJfjub7dDW1SP0jaHWLu/hg==
+
+react-script-hook@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-script-hook/-/react-script-hook-1.1.0.tgz#f88bb74b1c89250d7577e6cd5472f10992190706"
+  integrity sha512-swEdGFIOgG4lfi1gdYzFNV28uKuowzbgEGb8Lwi/yp696BVa6RvvuW4a7FY9mic+SecojVlHMWcllygmAg6EJg==
 
 react-scripts@4.0.0:
   version "4.0.0"
